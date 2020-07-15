@@ -6,6 +6,8 @@
   <name>GFX-Engine</name>
   <description>A simple OpenGL 4.6 Graphics Engine</description>
   	<properties>
+ 		<maven.compiler.source>1.8</maven.compiler.source>
+ 		<maven.compiler.target>1.8</maven.compiler.target>
 		<lwjgl.version>3.2.3</lwjgl.version>
 		<joml.version>1.9.25</joml.version>
 		<steamworks4j.version>1.8.0</steamworks4j.version>

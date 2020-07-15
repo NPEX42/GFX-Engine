@@ -7,7 +7,7 @@ import org.joml.*;
 
 import uk.co.nerdprogramming.gfx.engine.api.SimpleDB;
 public class GLSLShader {
-	private static SimpleDB db;
+	private static SimpleDB db = new SimpleDB();
 	private int progID, vertID, fragID;
 	
 	private GLSLShader(int progID, int vertID, int fragID) {
@@ -29,13 +29,13 @@ public class GLSLShader {
 		glCompileShader(vertID);
 		if(glGetShaderi(vertID, GL_COMPILE_STATUS) == GL_FALSE) {
 			System.err.println("Error Compiling Vertex Shader...");
-			System.err.println(glGetShaderInfoLog(progID));
+			System.err.println(glGetShaderInfoLog(progID, 1024));
 			System.err.println("Source: \n=========\n"+vertexSource+"=========");
 		}
 		//TODO: Fix Potential False Negative Compile Status.
 		if(glGetShaderi(fragID, GL_COMPILE_STATUS) == GL_FALSE) {
 			System.err.println("Error Compiling Fragment Shader...");
-			System.err.println(glGetShaderInfoLog(fragID));
+			System.err.println(glGetShaderInfoLog(fragID, 1024));
 			System.err.println("Source: \n=========\n"+fragmentSource+"=========");
 		}
 		
@@ -47,7 +47,7 @@ public class GLSLShader {
 		glValidateProgram(progID);
 		if(glGetProgrami(progID, GL_LINK_STATUS) == GL_FALSE) {
 			System.err.println("Error Linking Shader Pipeline...");
-			System.err.println(glGetProgramInfoLog(progID));
+			System.err.println(glGetProgramInfoLog(progID, 1024));
 		}
 		
 		return new GLSLShader(progID, vertID, fragID);
@@ -99,6 +99,12 @@ public class GLSLShader {
 		glDeleteShader(vertID);
 		glDeleteShader(fragID);
 		glDeleteProgram(progID);
+	}
+	
+	public void SetupAttribs(String... attribs) {
+		for(int i = 0; i < attribs.length; i++) {
+			glBindAttribLocation(progID, i, attribs[i]);
+		}
 	}
 	
 	private int GetUniform(String name) {

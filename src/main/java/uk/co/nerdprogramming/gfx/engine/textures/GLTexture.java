@@ -6,7 +6,6 @@ public class GLTexture {
 	private int texID, width, height;
 	
 	public GLTexture(int width, int height) {
-		super();
 		this.width = width;
 		this.height = height;
 	}
@@ -18,16 +17,16 @@ public class GLTexture {
 		this.texID = texID;
 	}
 
-	public void SetTextureData(int[] data) {
+	public void SetTextureData(int[] data, int channels) {
 		glBindTexture(GL_TEXTURE_2D, texID);
 		glInvalidateTexImage(texID, 0);
-		glTexImage2D(GL_TEXTURE_2D, 0, 4, width, height, 0, GL_RGBA, GL_UNSIGNED_INT_8_8_8_8, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, channels, width, height, 0, GL_RGBA, GL_UNSIGNED_INT_8_8_8_8, data);
 	}
 	
-	public void SetTextureData(ByteBuffer data) {
+	public void SetTextureData(ByteBuffer data, int channels) {
 		glBindTexture(GL_TEXTURE_2D, texID);
 		glInvalidateTexImage(texID, 0);
-		glTexImage2D(GL_TEXTURE_2D, 0, 4, width, height, 0, GL_RGBA, GL_BYTE, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, channels, width, height, 0, GL_RGBA, GL_BYTE, data);
 	}
 	
 	public void SetScaleParameters(int min, int mag) {
@@ -55,25 +54,27 @@ public class GLTexture {
 		tex.Generate();
 		tex.SetScaleParameters(NEAREST, NEAREST);
 		tex.SetUVWrappingMode(CLAMP, CLAMP);
-		tex.SetTextureData(new int[width * height]);
+		tex.SetTextureData(new int[width * height], 4);
 		return tex;
 	}
 	
-	public static GLTexture Load(String filePath) {
+	public static GLTexture Load(String filePath, boolean flipY) {
 		
 		int[] w = new int[1], h = new int[1];
 		int[] channels = new int[1];
+		stbi_set_flip_vertically_on_load(flipY);
 		ByteBuffer texBuffer = stbi_load(filePath, w, h, channels, 4);
 		if(texBuffer == null) return null;
-		GLTexture tex = new GLTexture(w[0], w[1]);
+		GLTexture tex = new GLTexture(w[0], h[0]);
 		tex.Generate();
 		tex.SetScaleParameters(NEAREST, NEAREST);
 		tex.SetUVWrappingMode(CLAMP, CLAMP);
-		tex.SetTextureData(texBuffer);
+		tex.SetTextureData(texBuffer, channels[0]);
 		return tex;
 	}
 	
 	public static final int
 	NEAREST = GL_NEAREST,
-	CLAMP = GL_CLAMP_TO_EDGE;
+	CLAMP = GL_CLAMP_TO_EDGE,
+	UNIT_0 = GL_TEXTURE0;
 }

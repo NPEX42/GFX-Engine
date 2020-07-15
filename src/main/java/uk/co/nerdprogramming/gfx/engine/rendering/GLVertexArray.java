@@ -12,7 +12,7 @@ public class GLVertexArray {
 		return va;
 	}
 
-	public GLVertexArray() {
+	private GLVertexArray() {
 		ID = glGenVertexArrays();
 	}
 	

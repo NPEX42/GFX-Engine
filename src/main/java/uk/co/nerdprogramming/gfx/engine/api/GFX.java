@@ -1,6 +1,5 @@
 package uk.co.nerdprogramming.gfx.engine.api;
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL.*;
 public class GFX {
 	private static long windowID;

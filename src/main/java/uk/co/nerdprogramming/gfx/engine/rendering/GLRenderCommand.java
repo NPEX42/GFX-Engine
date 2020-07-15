@@ -1,6 +1,5 @@
 package uk.co.nerdprogramming.gfx.engine.rendering;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL30.glBindVertexArray;
 public class GLRenderCommand {
 	public static void ClearColor(float r, float g, float b, float a) {
 		glClearColor(r, g, b, a);

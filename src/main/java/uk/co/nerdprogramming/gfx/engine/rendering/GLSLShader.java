@@ -2,9 +2,14 @@ package uk.co.nerdprogramming.gfx.engine.rendering;
 import static org.lwjgl.opengl.GL46.*;
 
 import java.io.*;
-public class GLSLShader {
-	private int progID, vertID, fragID;
 
+import org.joml.*;
+
+import uk.co.nerdprogramming.gfx.engine.api.SimpleDB;
+public class GLSLShader {
+	private static SimpleDB db;
+	private int progID, vertID, fragID;
+	
 	private GLSLShader(int progID, int vertID, int fragID) {
 		super();
 		this.progID = progID;
@@ -94,5 +99,71 @@ public class GLSLShader {
 		glDeleteShader(vertID);
 		glDeleteShader(fragID);
 		glDeleteProgram(progID);
+	}
+	
+	private int GetUniform(String name) {
+		if(db.ContainsEntry(progID+"."+name)) {
+			return db.GetInt(progID+"."+name);
+		} else {
+			int loc = glGetUniformLocation(progID, name);
+			//if(loc == -1) System.err.println("Couldn't Load Uniform '"+name+"'");
+			if(loc > -1) db.SetInt(progID+"."+name, loc);
+			return loc;
+		}
+	}
+	
+	public void UploadFloat1(String name, float x) {
+		Bind();
+		glUniform1f(GetUniform(name), x);
+	}
+	
+	public void UploadFloat2(String name, Vector2f xy) {
+		Bind();
+		glUniform2f(GetUniform(name), xy.x, xy.y);
+	}
+	
+	public void UploadFloat3(String name, Vector3f xyz) {
+		Bind();
+		glUniform3f(GetUniform(name), xyz.x, xyz.y, xyz.z);
+	}
+	
+	public void UploadFloat4(String name, Vector4f xyzw) {
+		Bind();
+		glUniform4f(GetUniform(name), xyzw.x, xyzw.y, xyzw.z, xyzw.w);
+	}
+	
+	public void UploadMat2(String name, Matrix2f mat) {
+		Bind();
+		glUniformMatrix2fv(GetUniform(name), false, mat.get(new float[4]));
+	}
+	
+	public void UploadMat3(String name, Matrix3f mat) {
+		Bind();
+		glUniformMatrix3fv(GetUniform(name), false, mat.get(new float[9]));
+	}
+	
+	public void UploadMat4(String name, Matrix4f mat) {
+		Bind();
+		glUniformMatrix4fv(GetUniform(name), false, mat.get(new float[16]));
+	}
+	
+	public void UploadBool(String name, boolean b) {
+		Bind();
+		glUniform1i(GetUniform(name), (b) ? 1 : 0);
+	}
+	
+	public void UploadInt(String name, int i) {
+		Bind();
+		glUniform1i(GetUniform(name), i);
+	}
+	
+	public void UploadInts(String name, int[] i) {
+		Bind();
+		glUniform1iv(GetUniform(name), i);
+	}
+	
+	public void UploadFloats(String name, float[] i) {
+		Bind();
+		glUniform1fv(GetUniform(name), i);
 	}
 }

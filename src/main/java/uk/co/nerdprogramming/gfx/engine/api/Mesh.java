@@ -12,10 +12,6 @@ public class Mesh {
 	public Mesh(float[] positions, int[] triangles) {
 		vao = GLVertexArray.Create();
 		pos = GLVertexBuffer.Create(0, positions, 3, 0, 0);
-		uvs = GLVertexBuffer.Create(1, new float[2], 2, 0, 0);
-		normals = GLVertexBuffer.Create(2, new float[3], 3, 0, 0);
-		color = GLVertexBuffer.Create(3, new float[3], 3, 0, 0);
-		texID = GLVertexBuffer.Create(1, new float[1], 1, 0, 0);
 		tris = GLIndexBuffer.Create(triangles);
 	}
 	
@@ -23,9 +19,6 @@ public class Mesh {
 		vao = GLVertexArray.Create();
 		pos = GLVertexBuffer.Create(0, positions, 3, 0, 0);
 		uvs = GLVertexBuffer.Create(1, texCoords, 2, 0, 0);
-		normals = GLVertexBuffer.Create(2, new float[3], 3, 0, 0);
-		color = GLVertexBuffer.Create(3, new float[3], 3, 0, 0);
-		texID = GLVertexBuffer.Create(1, new float[1], 1, 0, 0);
 		tris = GLIndexBuffer.Create(triangles);
 	}
 	
@@ -34,11 +27,11 @@ public class Mesh {
 	
 	public void Destruct() {
 		vao.Delete();
-		pos.Delete();
-		uvs.Delete();
-		normals.Delete();
-		color.Delete();
-		texID.Delete();
-		tris.Delete();
+		if(pos != null) pos.Delete();
+		if(uvs != null) uvs.Delete();
+		if(normals != null) normals.Delete();
+		if(color != null) color.Delete();
+		if(texID != null) texID.Delete();
+		if(tris != null) tris.Delete();
 	}
 }

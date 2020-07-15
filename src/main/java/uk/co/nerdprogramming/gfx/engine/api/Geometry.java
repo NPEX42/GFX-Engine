@@ -16,4 +16,8 @@ public class Geometry {
 	public GLSLShader getShader() {
 		return shader;
 	}
+	
+	public void Destruct() {
+		mesh.Destruct();
+	}
 }

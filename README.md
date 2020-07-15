@@ -4,9 +4,9 @@
 
 -----
 
-## Installation Instructions
+## Installation Instructions (Requires Maven & Git)
 
-### Windows
+### Windows 
 
 ```CMD
 git clone https://github.com/NPEX42/GFX-Engine.git

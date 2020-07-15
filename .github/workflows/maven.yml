@@ -4,7 +4,7 @@
 name: Java CI with Maven
 
 on:
-  push: ["master", "features/*","release/*",""]
+  push: ["master", "features/*","release/*"]
 
 jobs:
   build:

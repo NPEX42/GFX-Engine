@@ -1,22 +1,20 @@
 package uk.co.nerdprogramming.gfx.engine.rendering;
 import java.util.ArrayList;
 
-import uk.co.nerdprogramming.gfx.engine.api.Mesh;
+import uk.co.nerdprogramming.gfx.engine.api.Geometry;
 
 
 public class Renderer {
 	public static int RENDER_QUEUE_LIMIT = 256;
-	private static ArrayList<Mesh> renderQueue = new ArrayList<Mesh>();
-	
-	public static void Submit(Mesh mesh) {
+	private static ArrayList<Geometry> renderQueue = new ArrayList<Geometry>();
+	public static void Submit(Geometry mesh) {
 		renderQueue.add(mesh);
 	}
-	
 	public static void Flush() {
-		for(Mesh mesh : renderQueue) {
-			GLRenderCommand.Draw(mesh.GetVAO(), mesh.GetVertexCount());
+		for(Geometry mesh : renderQueue) {
+			mesh.getShader().Bind();
+			GLRenderCommand.Draw(mesh.getMesh().GetVAO(), mesh.getMesh().GetVertexCount());
 		}
-		
 		renderQueue.clear();
 	}
 }

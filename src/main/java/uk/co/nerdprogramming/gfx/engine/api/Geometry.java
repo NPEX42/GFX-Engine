@@ -1,6 +1,6 @@
 package uk.co.nerdprogramming.gfx.engine.api;
 
-import uk.co.nerdprogramming.gfx.engine.rendering.GLSLShader;
+import uk.co.nerdprogramming.gfx.engine.shaders.GLSLShader;
 
 public class Geometry {
 	private Mesh mesh;
@@ -15,5 +15,9 @@ public class Geometry {
 	}
 	public GLSLShader getShader() {
 		return shader;
+	}
+	
+	public void Destruct() {
+		mesh.Destruct();
 	}
 }

@@ -1,4 +1,4 @@
-package uk.co.nerdprogramming.gfx.engine.rendering;
+package uk.co.nerdprogramming.gfx.engine.shaders;
 import static org.lwjgl.opengl.GL46.*;
 
 import java.io.*;

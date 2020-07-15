@@ -1,6 +1,6 @@
 package uk.co.nerdprogramming.gfx.engine.api;
 
-import uk.co.nerdprogramming.gfx.engine.shaders.GLSLShader;
+import uk.co.nerdprogramming.gfx.engine.shaders.*;
 
 public class Geometry {
 	private Mesh mesh;

@@ -19,22 +19,22 @@ public class GLTexture {
 		this.texID = texID;
 	}
 
-	public void SetTextureData(int[] data, int channels) {
+	public void SetTextureData(int[] data) {
 		glBindTexture(GL_TEXTURE_2D, texID);
 		glInvalidateTexImage(texID, 0);
-		glTexImage2D(GL_TEXTURE_2D, 0, channels, width, height, 0, GL_RGBA, GL_UNSIGNED_INT_8_8_8_8, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_INT_8_8_8_8, data);
 	}
 	
-	public void SetTextureData(byte[] data, int channels) {
+	public void SetTextureData(byte[] data) {
 		ByteBuffer buffer = MemoryUtil.memAlloc(data.length);
 		buffer.put(data);
-		SetTextureData(buffer, channels);
+		SetTextureData(buffer);
 	}
 	
-	public void SetTextureData(ByteBuffer data, int channels) {
+	public void SetTextureData(ByteBuffer data) {
 		glBindTexture(GL_TEXTURE_2D, texID);
 		glInvalidateTexImage(texID, 0);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 	}
 	
 	public void SetScaleParameters(int min, int mag) {
@@ -62,7 +62,7 @@ public class GLTexture {
 		tex.Generate();
 		tex.SetScaleParameters(NEAREST, NEAREST);
 		tex.SetUVWrappingMode(CLAMP, CLAMP);
-		tex.SetTextureData(new byte[width * height], 4);
+		tex.SetTextureData(new byte[width * height]);
 		return tex;
 	}
 	
@@ -82,6 +82,19 @@ public class GLTexture {
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, w[0], h[0], 0, GL_RGBA, GL_UNSIGNED_BYTE, texBuffer);
 		glBindTexture(GL_TEXTURE_2D, 0);
 		return new GLTexture(texID, w[0], h[0]);
+	}
+	
+public static GLTexture Load(int[] data, int width, int height, int scaleMode, int UVMode) {
+		
+		int texID = glGenTextures();
+		glBindTexture(GL_TEXTURE_2D, texID);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, scaleMode);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, scaleMode);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, UVMode);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, UVMode);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_INT_8_8_8_8, data);
+		glBindTexture(GL_TEXTURE_2D, 0);
+		return new GLTexture(texID, width, height);
 	}
 	
 	public static final int

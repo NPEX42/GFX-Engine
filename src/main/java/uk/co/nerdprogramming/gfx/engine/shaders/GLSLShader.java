@@ -1,10 +1,8 @@
 package uk.co.nerdprogramming.gfx.engine.shaders;
 import static org.lwjgl.opengl.GL46.*;
-
 import java.io.*;
-
 import org.joml.*;
-
+import java.awt.Color;
 import uk.co.nerdprogramming.gfx.engine.api.SimpleDB;
 import uk.co.nerdprogramming.gfx.engine.textures.GLTexture;
 public class GLSLShader {
@@ -172,6 +170,15 @@ public class GLSLShader {
 	public void UploadFloats(String name, float[] i) {
 		Bind();
 		glUniform1fv(GetUniform(name), i);
+	}
+	
+	public void UploadColor(String name, Color c) {
+		UploadFloat4(name, new Vector4f(
+				c.getRed() / 255f,
+				c.getGreen() / 255f,
+				c.getBlue() / 255f,
+				c.getAlpha() / 255f
+				));
 	}
 	
 	public void UploadTexture(String name, GLTexture tex, int slot) {

@@ -6,6 +6,7 @@ import java.io.*;
 import org.joml.*;
 
 import uk.co.nerdprogramming.gfx.engine.api.SimpleDB;
+import uk.co.nerdprogramming.gfx.engine.textures.GLTexture;
 public class GLSLShader {
 	private static SimpleDB db = new SimpleDB();
 	private int progID, vertID, fragID;
@@ -171,5 +172,10 @@ public class GLSLShader {
 	public void UploadFloats(String name, float[] i) {
 		Bind();
 		glUniform1fv(GetUniform(name), i);
+	}
+	
+	public void UploadTexture(String name, GLTexture tex, int slot) {
+		tex.Bind(slot);
+		UploadInt(name, slot);
 	}
 }

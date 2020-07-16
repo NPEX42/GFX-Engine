@@ -22,7 +22,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: 'nightly-alpha-'${{ steps.date.outputs.date }}
-          release_name: 'nightly-'${{ steps.date.outputs.date }}
+          tag_name: 'nightly-alpha'
+          release_name: 'nightly-build'
           draft: false
           prerelease: true

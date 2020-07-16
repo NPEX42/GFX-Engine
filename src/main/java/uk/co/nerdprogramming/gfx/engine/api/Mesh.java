@@ -1,5 +1,7 @@
 package uk.co.nerdprogramming.gfx.engine.api;
 
+import java.util.Arrays;
+
 import uk.co.nerdprogramming.gfx.engine.rendering.GLIndexBuffer;
 import uk.co.nerdprogramming.gfx.engine.rendering.GLVertexArray;
 import uk.co.nerdprogramming.gfx.engine.rendering.GLVertexBuffer;
@@ -33,5 +35,28 @@ public class Mesh {
 		if(color != null) color.Delete();
 		if(texID != null) texID.Delete();
 		if(tris != null) tris.Delete();
+	}
+	
+	//Factory Methods
+	public static Mesh CreateUnitQuad(float x, float y, float w, float h) {
+		float[] pos = {
+				x+w/2, y-h/2, 0,
+				x-w/2, y-h/2, 0,
+				x-w/2, y+h/2, 0,
+				x+w/2, y+h/2, 0
+		};
+		
+		float[] uvs = {
+				0.0f, 1.0f,
+				1.0f, 1.0f,
+				1.0f, 0.0f,
+				0.0f, 0.0f,
+		};
+		
+		int[] tris = {0,1,2,2,3,0};
+		
+		System.err.println(Arrays.toString(pos));
+		
+		return new Mesh(pos, uvs, tris);
 	}
 }

@@ -37,6 +37,21 @@ public class GFX {
 		glfwTerminate();
 	}
 	
+	
+	
+	public static long GetWindowID() {
+		return windowID;
+	}
+
+	public static int GetWidth() {
+		return width;
+	}
+
+	public static int GetHeight() {
+		return height;
+	}
+
+
 	public static final int
 	NULL = 0;
 

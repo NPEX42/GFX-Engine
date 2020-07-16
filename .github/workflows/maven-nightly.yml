@@ -6,6 +6,9 @@ name: Package Nightly-build
 on:
   schedule:
   - cron: "0 0 * * *"
+  push:
+    branches: 
+      - master
 
 jobs:
   build:
@@ -29,7 +32,7 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git commit -m "Add changes" -a
+        git commit -m "Build Nightly Jar" -a
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:

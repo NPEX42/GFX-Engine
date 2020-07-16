@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>uk.co.nerdprogramming</groupId>
   <artifactId>gfx.engine</artifactId>
-  <version>0.4.0-SNAPSHOT</version>
+  <version>0.6.0-SNAPSHOT</version>
   <name>GFX-Engine</name>
   <description>A simple OpenGL 4.6 Graphics Engine</description>
   	<properties>

@@ -28,6 +28,10 @@ public class GFX {
 		return true;
 	}
 	
+	public static void INIT_TEST_ONLY() {
+		Init(10, 10, "DEBUG_ONLY");
+	}
+	
 	public static boolean Update() {
 		glfwSwapBuffers(windowID);
 		glfwPollEvents();

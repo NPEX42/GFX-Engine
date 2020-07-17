@@ -9,7 +9,13 @@
 ### Windows 
 
 ```CMD
-git clone https://github.com/NPEX42/GFX-Engine.git
+git clone --recursive https://github.com/NPEX42/GFX-Engine.git
+cd GFX-Engine
+mvn install
+```
+
+```Bash
+git clone --recursive https://github.com/NPEX42/GFX-Engine.git
 cd GFX-Engine
 mvn install
 ```

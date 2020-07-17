@@ -1,6 +1,9 @@
 package uk.co.nerdprogramming.gfx.engine.api;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
+
+import org.lwjgl.opengl.GL46;
+
 import static org.lwjgl.opengl.GL.*;
 public class GFX {
 	private static long windowID;
@@ -49,6 +52,10 @@ public class GFX {
 
 	public static int GetHeight() {
 		return height;
+	}
+	
+	public static String GetRendererName() {
+		return GL46.glGetString(GL_RENDERER);
 	}
 
 

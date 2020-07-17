@@ -93,6 +93,53 @@ public class GLSLShader {
 		}
 	}
 	
+	public static GLSLShader LoadShader(InputStream stream) {
+		try(BufferedReader reader = new BufferedReader(new InputStreamReader(stream))) {
+			String line = "";
+			StringBuffer buffer = new StringBuffer();
+			while((line = reader.readLine()) != null) {
+				buffer.append(line+"\n");
+			}
+			
+			String[] source = buffer.toString().split("\n");
+			
+			StringBuffer
+			vertBuffer = new StringBuffer(),
+			fragBuffer = new StringBuffer();
+			int TYPE = 0;
+			for(String item : source) {
+				switch(item) {
+				case "#type vertexShader": TYPE = GL_VERTEX_SHADER; break;
+				
+				case "#type pixelShader":
+				case "#type fragementShader": TYPE = GL_FRAGMENT_SHADER; break;
+				
+				default:
+					switch(TYPE) {
+					case GL_VERTEX_SHADER: vertBuffer.append(item + "\n"); break;
+					case GL_FRAGMENT_SHADER: fragBuffer.append(item + "\n"); break;
+					}
+				}
+			}
+			
+			return Compile(vertBuffer.toString(), fragBuffer.toString());
+			
+		} catch (FileNotFoundException e) {
+			System.err.println("[GLSLShader] Unable To Locate File '");
+			return null;
+		} catch (IOException e) {
+			System.err.println("[GLSLShader] An IOException Occurred: ");
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static GLSLShader LoadShaderJAR(String shaderFilePath) {
+		InputStream stream = GLSLShader.class.getClassLoader().getResourceAsStream(shaderFilePath);
+		if(stream == null) return null;
+		return LoadShader(stream);
+	}
+	
 	public void Bind() {glUseProgram(progID);}
 	public void Destruct() {
 		glDeleteShader(vertID);

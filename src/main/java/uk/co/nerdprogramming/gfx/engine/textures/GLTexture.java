@@ -7,6 +7,20 @@ import org.lwjgl.system.MemoryUtil;
 public class GLTexture {
 	private int texID, width, height;
 	
+	public static GLTexture white = GLTexture.Load(new int[] {0xFFFFFFFF}, 1, 1, GLTexture.NEAREST, GLTexture.CLAMP);
+	
+	public int getTexID() {
+		return texID;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
 	public GLTexture(int width, int height) {
 		this.width = width;
 		this.height = height;
